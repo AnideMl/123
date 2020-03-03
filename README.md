@@ -1,41 +1,60 @@
-# Вторая лабораторная работа по разработке ПО.
-
-## File-Reader git
+# File-Reader git project
 
 Задачи данного проекта:
-  - Чтение;
-  - Запись;
-  - Получение метаданных;
-  - Шифрование;
-  - Дешифрование;
-  - Подсчет слов палиндромов
+  - Чтение (*Reader.cs*);
+  - Запись (*Reader.cs*);
+  - Получение метаданных (*Reader.cs*);
+  - Подсчет слов-палиндромов (*Reader.cs*);
+  - Смена папки файла (*Reader.cs*);
+  - Шифрование (*Crypto.cs*);
+  - Дешифрование (*Crypto.cs*).
+  
 	текстового файла
 
-## Delimiter
-  - Tab (``\t``)
-  - Comma (``,``)
+## Перечень всех классов и методов с их описанием:
 
-## Basic Example 
+- Reader.cs
+  - public static string Read(string path) - *Чтение файла*
+  - public static void  Write(string path, string data, string method) - *Запись строки в файл*
+  - public static System.Collections.Generic.List<string> GetFileInfo(string path) - *Получение метаданных о файле*
+  - public static int Palindrom(string path) - *Подсчет слов палиндромов в файле*
+  - public static void MoveFile(string path, string newPath) - *Изменение папки файла*
+- Crypto.cs
+  -  public static void Encode(string Path, string pKey, string method) - "Кодирование/декодирование файла с помощью XOR"
+	
+## Методы отдельных функций:
 
+1. Reader.Write(string path, string data, string Method);
+
+Method принимает значения:
+  - "a" - добавление строки в конец файла;
+  - "n" - перезапись файла или запись в новый файл.
+  
+```csharp
+Reader.Write(@"C:\test.txt", "Example text", "a");
+Reader.Write(@"C:\test.txt", "Example text", "n");
 ```
+
+2. Reader.Encode(string path, string key, string Method);
+
+Method принимает значения:
+  - "e" - режим шифрования;
+  - "d" - режим дешифрования.
+  
+```csharp
+Crypto.Encode(@"C:\test.txt", "Example key", "e");
+Crypto.Encode(@"C:\test.txt", "Example key", "d");
+```
+
+## Reader.cs примеры
+
+```csharp
+//Чтение
 string Path = @"C:\sample.txt";
-var table = Path.FileToTable(heading: true, delimiter: '\t');
+string data = Reader.Read(Path);
 
-// All your processing here
-
-table.TableToFile(@"C:\output.txt");
-```
-
-## Pagination Example 
-
-```
-int Offset = 0;
-int Limit = 100000
+//Запись в файл
 string Path = @"C:\sample.txt";
-var table = Path.FileToTable(heading: true, delimiter: '\t', offset : Offset, limit: Limit);
-
-// Do all your processing here and with limit and offset and save to drive in append mode
-// The append mode will write the output in same file for each processed batch.
-
-table.TableToFile(@"C:\output.txt");
+string data = "example";
+Reader.Write(Path, data, "n");
 ```
